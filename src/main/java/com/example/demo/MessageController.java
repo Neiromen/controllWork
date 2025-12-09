@@ -18,7 +18,7 @@ public class MessageController {
     @PostMapping("")
     public ResponseEntity<Message> createMessage(@RequestBody Message message) {
         message.setId(messageList.size());
-        message.setCreatedAt(LocalDateTime.from(LocalDate.now()));
+        message.setCreatedAt(LocalDateTime.from(LocalDateTime.now()));
         messageList.add(message);
         return ResponseEntity.ok(message);
     }
@@ -83,6 +83,12 @@ public class MessageController {
     public ResponseEntity<List<Message>> getCheapest() {
         List<Message> cheapest = messageList.stream().sorted(Comparator.comparing(Message::getPrice)).toList();
         return ResponseEntity.ok(cheapest);
+    }
+
+    @GetMapping("/cheapest")
+    public ResponseEntity<List<Message>> getExpensive() {
+        List<Message> expensiveMessages = messageList.stream().sorted(Comparator.comparing(Message::getPrice)).toList().reversed();
+        return ResponseEntity.ok(expensiveMessages);
     }
 
     @GetMapping("/today")

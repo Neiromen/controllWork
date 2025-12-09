@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,13 +12,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Message {
-    @JsonIgnore
-    private int id;
+    @JsonProperty(required = false)
+    private Integer id;
     private String title;
-    private int price;
+    @JsonProperty(required = false)
+    private Integer price;
     private String author;
     private String message;
+    @JsonProperty(required = false)
     private LocalDateTime createdAt;
+    @JsonProperty(required = false)
     private LocalDateTime updatedAt;
 
 }

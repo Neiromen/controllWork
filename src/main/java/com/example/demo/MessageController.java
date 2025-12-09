@@ -85,7 +85,7 @@ public class MessageController {
         return ResponseEntity.ok(cheapest);
     }
 
-    @GetMapping("/cheapest")
+    @GetMapping("/expensive")
     public ResponseEntity<List<Message>> getExpensive() {
         List<Message> expensiveMessages = messageList.stream().sorted(Comparator.comparing(Message::getPrice)).toList().reversed();
         return ResponseEntity.ok(expensiveMessages);

@@ -1,0 +1,15 @@
+curl -X POST localhost:8080/posts -H "Content-Type: application/json" -d '{"title":"title","author":"box","message":"mess"}'
+curl localhost:8080/posts
+curl localhost:8080/posts/0
+curl -X PUT localhost:8080/posts/0 -H "Content-Type: application/json" -d '{"title":"title2","author":"box","message":"mess"}'
+curl -X DELETE localhost:8080/posts/0
+curl -X DELETE localhost:8080/posts
+curl localhost:8080/posts/count
+curl localhost:8080/posts/author/box
+curl localhost:8080/posts/latest
+curl localhost:8080/posts/cheapest
+curl localhost:8080/posts/expensive
+curl localhost:8080/posts/today
+curl localhost:8080/posts/search/mess
+
+

@@ -70,7 +70,7 @@ public class MessageController {
 
     @GetMapping("/latest")
     public ResponseEntity<List<Message>> getLastTwentyMessages() {
-        int endIndex = 19;
+        int endIndex = 20;
         if (messageList.size() < 20) {
             endIndex = messageList.size();
         }

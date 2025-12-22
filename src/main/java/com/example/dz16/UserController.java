@@ -46,7 +46,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/update")
+    @PutMapping("/{id}")
     public ResponseEntity<UserEntity> updateUser(@PathVariable int id, @RequestBody UserEntity userEntity){
         if (id> userEntities.size()-1){
             return ResponseEntity.status(404).build();

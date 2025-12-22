@@ -54,4 +54,17 @@ public class UserController {
         userEntities.set(id, userEntity);
         return ResponseEntity.ok(userEntity);
     }
+
+    @GetMapping("/all")
+    public List<UserDTOOutput> getAllUsers(@RequestParam int age){
+        List<UserDTOOutput> userDTOOutputs = new ArrayList<>();
+        for (UserEntity userEntity:userEntities){
+            if(Math.abs(userEntity.getAge()-age)<=5){
+                userDTOOutputs.add(userEntity.toDTOOut());
+            }
+        }
+        return ResponseEntity.ok(userDTOOutputs).getBody();
+    }
+
+
 }

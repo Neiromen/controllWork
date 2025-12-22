@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -56,14 +57,34 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public List<UserDTOOutput> getAllUsers(@RequestParam int age){
+    public List<UserDTOOutput> getAllUsers(@RequestParam(required = false,defaultValue = "-5") int age,
+                                           @RequestParam(required = false, defaultValue = "id") String sortBy,
+                                           @RequestParam(required = false, defaultValue = "up") String direction,
+                                           @RequestParam(required = false, defaultValue = "-1") int numPage,
+                                           @RequestParam(required = false, defaultValue = "-1") int numUsersOnPage
+                                           ){
         List<UserDTOOutput> userDTOOutputs = new ArrayList<>();
         for (UserEntity userEntity:userEntities){
-            if(Math.abs(userEntity.getAge()-age)<=5){
+            if(Math.abs(userEntity.getAge()-age)<=5 || age==-5){
                 userDTOOutputs.add(userEntity.toDTOOut());
             }
         }
-        return ResponseEntity.ok(userDTOOutputs).getBody();
+        switch (sortBy){
+            case "username":
+               userDTOOutputs = userDTOOutputs.stream().sorted(Comparator.comparing(UserDTOOutput::getUsername)).toList();
+            case "age":
+                userDTOOutputs = userDTOOutputs.stream().sorted(Comparator.comparing(UserDTOOutput::getAge)).toList();
+        }
+        if(direction.equals("down")){
+            userDTOOutputs = userDTOOutputs.reversed();
+        }
+        if(numPage==-1 && numUsersOnPage==-1){
+            return ResponseEntity.ok(userDTOOutputs).getBody();
+        } else {
+            int fromIndex = numUsersOnPage*numPage;
+            List<UserDTOOutput> userDTOOutputList = userDTOOutputs.subList(fromIndex,fromIndex+numUsersOnPage);
+            return ResponseEntity.ok(userDTOOutputList).getBody();
+        }
     }
 
 
